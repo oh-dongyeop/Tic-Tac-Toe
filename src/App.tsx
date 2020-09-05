@@ -78,23 +78,23 @@ class App extends React.Component<Props,State> {
 
   isEnd = () => {
     const history = this.state.history;
-    const current = history[history.length-1].slice();
+    const current = history[this.state.point].slice();
     const size = this.state.size;
     if(this.state.mode===5){
       for(let i = 0; i < current.length ; i++){
         if(current[i]){
           const pattern = 
-          [i%size<=size-this.state.mode?[i,i+1,i+2,i+3,i+4]:[0],
+          [i%size<size-this.state.mode?[i,i+1,i+2,i+3,i+4]:[0,1,2,3,4],
           [i,i+size,i+size*2,i+size*3,i+size*4],
           [i,i+size+1,i+(size+1)*2,i+(size+1)*3,i+(size+1)*4],
-          [i,i+size-1,i+(size-1)*2,i+(size-1)*3,i+(size-1)*4]];
+          i%size===0?[i,i-size+1,i-(size-1)*2,i-(size-1)*3,i-(size-1)*4]:[0,1,2,3,4]];
           for(let j = 0 ; j < 4 ; j++){
-            if(
+            if(current[pattern[j][0]]&&
             current[pattern[j][0]]===current[pattern[j][1]]&&
             current[pattern[j][1]]===current[pattern[j][2]]&&
             current[pattern[j][2]]===current[pattern[j][3]]&&
             current[pattern[j][3]]===current[pattern[j][4]]){
-              return current[pattern[j][0]];
+              return current[pattern[j][0]]+" Victory!!";
             }
           }
         }
@@ -103,16 +103,16 @@ class App extends React.Component<Props,State> {
       for(let i = 0; i < current.length ; i++){
         if(current[i]){
           const pattern = 
-          [i%size<=size-this.state.mode?[i,i+1,i+2,i+3]:[0,1,2,3],
+          [i%size<size-this.state.mode?[i,i+1,i+2,i+3]:[0,1,2,3],
           [i,i+size,i+size*2,i+size*3],
           [i,i+size+1,i+(size+1)*2,i+(size+1)*3],
-          [i,i+size-1,i+(size-1)*2,i+(size-1)*3]];
+          i%size===0?[i,i-size+1,i-(size-1)*2,i-(size-1)*3]:[0,1,2,3]];
           for(let j = 0 ; j < 4 ; j++){
-            if(
+            if(current[pattern[j][0]]&&
             current[pattern[j][0]]===current[pattern[j][1]]&&
             current[pattern[j][1]]===current[pattern[j][2]]&&
             current[pattern[j][2]]===current[pattern[j][3]]){
-              return current[pattern[j][0]];
+              return current[pattern[j][0]]+" Victory!!";
             }
           }
         }
@@ -121,19 +121,22 @@ class App extends React.Component<Props,State> {
       for(let i = 0; i < current.length ; i++){
         if(current[i]){
           const pattern = 
-          [i%size<=size-this.state.mode?[i,i+1,i+2]:[0,1,2],
+          [i%size<size-this.state.mode?[i,i+1,i+2]:[0,1,2],
           [i,i+size,i+size*2],
           [i,i+size+1,i+(size+1)*2],
-          [i,i+size-1,i+(size-1)*2]];
+          i%size===0?[i,i-size+1,i-(size-1)*2]:[0,1,2]];
           for(let j = 0 ; j < 4 ; j++){
-            if(
+            if(current[pattern[j][0]]&&
             current[pattern[j][0]]===current[pattern[j][1]]&&
             current[pattern[j][1]]===current[pattern[j][2]]){
-              return current[pattern[j][0]];
+              return current[pattern[j][0]]+" Victory!!";
             }
           }
         }
       }
+    }
+    if(this.state.point===size*size){
+      return "Draw!!"
     }
   }
 
@@ -151,7 +154,7 @@ class App extends React.Component<Props,State> {
             boxes={this.state.history[this.state.point]} 
             onClick={(index : number) => this.handleClick(index)}
             />
-          <Message value={this.isEnd()?this.isEnd()+" Victory!!":"현재 턴 : "+ this.state.turn}/>
+          <Message value={this.isEnd()?this.isEnd()+"":"현재 턴 : "+ this.state.turn}/>
           </article>
           <article className="History">
             <History 
