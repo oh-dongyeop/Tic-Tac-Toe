@@ -22,9 +22,9 @@ class Mode extends React.Component <ModeProps, ModeState> {
                     <input type="radio" name="size" value={9}/>9x9
                 </div>
                 <div>
-                    <input type="radio" name="mode" value={3}/>삼목
-                    <input type="radio" name="mode" value={4}/>사목
-                    <input type="radio" name="mode" value={5}/>오목
+                    <input type="radio" name="mode" value={3}/>3목
+                    <input type="radio" name="mode" value={4}/>4목
+                    <input type="radio" name="mode" value={5}/>5목
                 </div>
                 <input type="submit" value="변경"/>
             </form>

@@ -17,12 +17,13 @@ class Board extends React.Component<BoardProps,BoardState>{
             return <Box key={index} value={value} onClick={() => this.props.onClick(index)}/>
         })
         const boardStyle = {
-            width : 'fit-content',
+            width : '100%',
+            height : '100%',
             display : 'grid',
             gridTemplateColumns : 'repeat('+this.props.size+',1fr)'
         }
         return(
-            <div className="Board" style={boardStyle}>
+            <div style={boardStyle}>
                 {boxes}
             </div>
         );

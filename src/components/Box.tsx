@@ -13,7 +13,7 @@ class Box extends React.Component<BoxProps, BoxState> {
     render(){
         return(
         <button className="Box" onClick={()=>this.props.onClick()}>
-            {this.props.value}
+            <span className="value">{this.props.value}</span>
         </button>
         );
     }
