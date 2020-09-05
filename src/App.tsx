@@ -144,7 +144,7 @@ class App extends React.Component<Props,State> {
     return (
       <div className="App">
         <header>
-          <span>시작 기본값 : {this.state.size} X {this.state.size} / {this.state.mode}목</span>
+          <span>현재 모드 : {this.state.size} X {this.state.size} / {this.state.mode}목</span>
           <Mode onSubmit={(e : any)=>this.changeMode(e)}/>
         </header>
         <section className="Main">
