@@ -87,7 +87,7 @@ class App extends React.Component<Props,State> {
           [i%size<=size-this.state.mode?[i,i+1,i+2,i+3,i+4]:[0,1,2,3,4],
           [i,i+size,i+size*2,i+size*3,i+size*4],
           [i,i+size+1,i+(size+1)*2,i+(size+1)*3,i+(size+1)*4],
-          i%size===0?[i,i-size+1,i-(size-1)*2,i-(size-1)*3,i-(size-1)*4]:[0,1,2,3,4]];
+          i%size<=size-this.state.mode?[i,i-size+1,i-(size-1)*2,i-(size-1)*3,i-(size-1)*4]:[0,1,2,3,4]];
           for(let j = 0 ; j < 4 ; j++){
             if(current[pattern[j][0]]&&
             current[pattern[j][0]]===current[pattern[j][1]]&&
@@ -106,7 +106,7 @@ class App extends React.Component<Props,State> {
           [i%size<=size-this.state.mode?[i,i+1,i+2,i+3]:[0,1,2,3],
           [i,i+size,i+size*2,i+size*3],
           [i,i+size+1,i+(size+1)*2,i+(size+1)*3],
-          i%size===0?[i,i-size+1,i-(size-1)*2,i-(size-1)*3]:[0,1,2,3]];
+          i%size<=size-this.state.mode?[i,i-size+1,i-(size-1)*2,i-(size-1)*3]:[0,1,2,3]];
           for(let j = 0 ; j < 4 ; j++){
             if(current[pattern[j][0]]&&
             current[pattern[j][0]]===current[pattern[j][1]]&&
@@ -124,7 +124,7 @@ class App extends React.Component<Props,State> {
           [i%size<=size-this.state.mode?[i,i+1,i+2]:[0,1,2],
           [i,i+size,i+size*2],
           [i,i+size+1,i+(size+1)*2],
-          i%size===0?[i,i-size+1,i-(size-1)*2]:[0,1,2]];
+          i%size<=size-this.state.mode?[i,i-size+1,i-(size-1)*2]:[0,1,2]];
           for(let j = 0 ; j < 4 ; j++){
             if(current[pattern[j][0]]&&
             current[pattern[j][0]]===current[pattern[j][1]]&&
