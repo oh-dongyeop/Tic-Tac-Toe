@@ -1,21 +1,15 @@
-import React from 'react';
+import React from "react"
 
 type MessageProps = {
-    value : string,
+  value: string
 }
 
-type MessageState = {
-
-}
+type MessageState = {}
 
 class Message extends React.Component<MessageProps, MessageState> {
-    render(){
-        return(
-            <span>
-                {this.props.value}
-            </span>
-        )
-    }
+  render() {
+    return <span>{this.props.value}</span>
+  }
 }
 
-export default Message;
+export default Message

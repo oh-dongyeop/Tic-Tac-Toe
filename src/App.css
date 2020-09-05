@@ -1,64 +1,65 @@
-html, body{
-    width: 100%;
-    height: 100%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+html,
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.App, #root{
-    width: 100%;
-    height: 100%;
+.App,
+#root {
+  width: 100%;
+  height: 100%;
 }
-.Box{
-    width: 1fr;
-    height: 1fr;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background-color: #fff;
-    font-weight: bold;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
+.Box {
+  width: 1fr;
+  height: 1fr;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-color: #fff;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
-.value{
-    display: block;
-    font-size: 30px;
-    position: absolute;
-}
-
-header{
-    padding: 30px 0  ;
-    text-align: center;
+.value {
+  display: block;
+  font-size: 30px;
+  position: absolute;
 }
 
-.Mode{
-    text-align: center;
+header {
+  padding: 30px 0;
+  text-align: center;
 }
 
-.Main{
-    display: flex;
-    justify-content: center;
-}
-.Main article{
-    margin: 10px;
-}
-.Board{
-    width: 500px;
-    height: 500px;
-}
-.History{
-    width: 200px;
-    height: 500px;
-    overflow: scroll;
+.Mode {
+  text-align: center;
 }
 
-.History button{
-    display: block;
-    margin: 5px;
+.Main {
+  display: flex;
+  justify-content: center;
+}
+.Main article {
+  margin: 10px;
+}
+.Board {
+  width: 500px;
+  height: 500px;
+}
+.History {
+  width: 200px;
+  height: 500px;
+  overflow: scroll;
 }
 
-.PrevNext button{
-    display: inline-block;
+.History button {
+  display: block;
+  margin: 5px;
+}
+
+.PrevNext button {
+  display: inline-block;
 }
