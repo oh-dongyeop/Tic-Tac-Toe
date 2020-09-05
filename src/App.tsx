@@ -144,19 +144,19 @@ class App extends React.Component<Props,State> {
     return (
       <div className="App">
         <header>
+          <span>시작 기본값 : {this.state.size} X {this.state.size} / {this.state.mode}목</span>
           <Mode onSubmit={(e : any)=>this.changeMode(e)}/>
         </header>
         <section className="Main">
-          <article>
-            <h1>{this.state.mode}목</h1>
+          <article className="Board">
             <Board 
             size={this.state.size} 
             boxes={this.state.history[this.state.point]} 
             onClick={(index : number) => this.handleClick(index)}
             />
-          <Message value={this.isEnd()?this.isEnd()+"":"현재 턴 : "+ this.state.turn}/>
           </article>
           <article className="History">
+            <Message value={this.isEnd()?this.isEnd()+"":"현재 턴 : "+ this.state.turn}/> 
             <History 
               history={this.state.history} 
               onClick={(i : number)=>this.jumpTo(i)} 
