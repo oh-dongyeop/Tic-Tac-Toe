@@ -14,6 +14,7 @@ body {
 .Box {
   width: 1fr;
   height: 1fr;
+  border: 1px solid gray;
   margin: 0;
   padding: 0;
   display: flex;

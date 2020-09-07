@@ -97,7 +97,7 @@ class App extends React.Component<Props, State> {
               current[pattern[j][2]] === current[pattern[j][3]] &&
               current[pattern[j][3]] === current[pattern[j][4]]
             ) {
-              return current[pattern[j][0]] + " Victory!!"
+              return current[pattern[j][0]]
             }
           }
         }
@@ -120,7 +120,7 @@ class App extends React.Component<Props, State> {
               current[pattern[j][1]] === current[pattern[j][2]] &&
               current[pattern[j][2]] === current[pattern[j][3]]
             ) {
-              return current[pattern[j][0]] + " Victory!!"
+              return current[pattern[j][0]]
             }
           }
         }
@@ -140,7 +140,7 @@ class App extends React.Component<Props, State> {
               current[pattern[j][0]] === current[pattern[j][1]] &&
               current[pattern[j][1]] === current[pattern[j][2]]
             ) {
-              return current[pattern[j][0]] + " Victory!!"
+              return current[pattern[j][0]]
             }
           }
         }
@@ -169,7 +169,9 @@ class App extends React.Component<Props, State> {
             />
           </article>
           <article className="History">
-            <Message value={this.isEnd() ? this.isEnd() + "" : "현재 턴 : " + this.state.turn} />
+            <Message
+              value={this.isEnd() ? this.isEnd() + " Victory!!" : "현재 턴 : " + this.state.turn}
+            />
             <History
               history={this.state.history}
               onClick={(i: number) => this.jumpTo(i)}
