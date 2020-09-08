@@ -1,13 +1,13 @@
 import React from "react"
 
-type HistoryProps = {
+interface HistoryProps {
   history: (string | null)[][]
   onClick: any
   reset: any
   point: number
 }
 
-type HistoryState = {
+interface HistoryState {
   switch: string
 }
 

@@ -6,9 +6,7 @@ import Mode from "./components/Mode"
 import History from "./components/History"
 import Message from "./components/Message"
 
-type Props = {}
-
-type State = {
+interface State {
   size: number
   mode: number
   history: (string | null)[][]
@@ -16,7 +14,7 @@ type State = {
   turn: string
 }
 
-class App extends React.Component<Props, State> {
+class App extends React.Component<{}, State> {
   constructor(props: any) {
     super(props)
     this.state = {
@@ -30,8 +28,8 @@ class App extends React.Component<Props, State> {
 
   changeMode = (e: any) => {
     e.preventDefault()
-    const newSize = Number(e.target.size.value)
-    const newMode = Number(e.target.mode.value)
+    const newSize: number = e.target.size.value
+    const newMode: number = e.target.mode.value
     if (newSize && newMode && newMode <= newSize) {
       return this.setState({
         size: newSize,
@@ -158,7 +156,7 @@ class App extends React.Component<Props, State> {
           <span>
             현재 모드 : {this.state.size} X {this.state.size} / {this.state.mode}목
           </span>
-          <Mode onSubmit={(e: any) => this.changeMode(e)} />
+          <Mode onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.changeMode(e)} />
         </header>
         <section className="Main">
           <article className="Board">

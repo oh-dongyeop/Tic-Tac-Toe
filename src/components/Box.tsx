@@ -1,13 +1,11 @@
 import React from "react"
 
-type BoxProps = {
+interface BoxProps {
   value: string | null
   onClick: any
 }
 
-type BoxState = {}
-
-class Box extends React.Component<BoxProps, BoxState> {
+class Box extends React.Component<BoxProps, {}> {
   render() {
     return (
       <button className="Box" onClick={() => this.props.onClick()}>

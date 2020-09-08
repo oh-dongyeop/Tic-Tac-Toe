@@ -1,12 +1,10 @@
 import React from "react"
 
-type MessageProps = {
+interface MessageProps {
   value: string
 }
 
-type MessageState = {}
-
-class Message extends React.Component<MessageProps, MessageState> {
+class Message extends React.Component<MessageProps, {}> {
   render() {
     return <span>{this.props.value}</span>
   }

@@ -1,12 +1,10 @@
 import React from "react"
 
-type ModeProps = {
+interface ModeProps {
   onSubmit: any
 }
 
-type ModeState = {}
-
-class Mode extends React.Component<ModeProps, ModeState> {
+class Mode extends React.Component<ModeProps, {}> {
   render() {
     return (
       <form className="Mode" onSubmit={(e) => this.props.onSubmit(e)}>
