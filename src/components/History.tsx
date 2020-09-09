@@ -31,9 +31,8 @@ class History extends React.Component<HistoryProps, HistoryState> {
     }
   }
 
-  play = () => {}
   render() {
-    const history = this.props.history.map((value: (string | null)[], index: number) => {
+    const history = this.props.history.map((_, index: number) => {
       if (index === 0) {
         return (
           <button key={index} onClick={() => this.props.reset()}>
@@ -59,6 +58,7 @@ class History extends React.Component<HistoryProps, HistoryState> {
                 this.setState({ switch: "Stop" })
                 let i = this.props.point === this.props.history.length - 1 ? 0 : this.props.point
                 const play = setInterval(() => {
+                  console.log(i)
                   if (i < this.props.history.length && this.state.switch === "Stop") {
                     this.props.onClick(i++)
                   } else {
