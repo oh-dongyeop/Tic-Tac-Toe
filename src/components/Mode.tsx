@@ -1,13 +1,13 @@
 import React from "react"
 
 interface ModeProps {
-  onSubmit: any
+  onSubmit: (event : React.FormEvent<HTMLFormElement>) => void
 }
 
-class Mode extends React.Component<ModeProps, {}> {
+class Mode extends React.Component<ModeProps> {
   render() {
     return (
-      <form className="Mode" onSubmit={(e) => this.props.onSubmit(e)}>
+      <form className="Mode" onSubmit={(e) => {this.props.onSubmit(e)}}>
         <div>
           <input type="radio" name="size" value={3} />
           3x3

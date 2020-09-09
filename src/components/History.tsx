@@ -12,7 +12,7 @@ interface HistoryState {
 }
 
 class History extends React.Component<HistoryProps, HistoryState> {
-  constructor(props: any) {
+  constructor(props: HistoryProps) {
     super(props)
     this.state = {
       switch: "Play",

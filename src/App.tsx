@@ -14,8 +14,8 @@ interface State {
   turn: string
 }
 
-class App extends React.Component<{}, State> {
-  constructor(props: any) {
+class App extends React.Component<{},State> {
+  constructor(props: {}) {
     super(props)
     this.state = {
       size: 3,
@@ -26,10 +26,11 @@ class App extends React.Component<{}, State> {
     }
   }
 
-  changeMode = (e: any) => {
+  changeMode = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const newSize: number = e.target.size.value
-    const newMode: number = e.target.mode.value
+    const target = e.target as HTMLFormElement
+    const newSize: number = Number(target.size.value)
+    const newMode: number = Number(target.mode.value)
     if (newSize && newMode && newMode <= newSize) {
       return this.setState({
         size: newSize,
@@ -42,11 +43,10 @@ class App extends React.Component<{}, State> {
       alert("값 입력 오류 // 보드 사이즈를 늘리세요.")
     }
   }
-
   handleClick = (i: number) => {
-    const point = this.state.point
-    const history = this.state.history.slice(0, point + 1)
-    const current = history[history.length - 1].slice()
+    const point : number = this.state.point
+    const history : (string | null)[][] = this.state.history.slice(0, point + 1)
+    const current : (string | null)[] = history[history.length - 1].slice()
     if (!current[i] && !this.isEnd()) {
       current[i] = this.state.turn
       return this.setState({
@@ -73,13 +73,13 @@ class App extends React.Component<{}, State> {
   }
 
   isEnd = () => {
-    const history = this.state.history
-    const current = history[this.state.point].slice()
-    const size = this.state.size
+    const history : (string | null)[][] = this.state.history
+    const current : (string | null)[] = history[this.state.point].slice()
+    const size : number = this.state.size
     if (this.state.mode === 5) {
       for (let i = 0; i < current.length; i++) {
         if (current[i]) {
-          const pattern = [
+          const pattern : number[][]= [
             i % size <= size - this.state.mode ? [i, i + 1, i + 2, i + 3, i + 4] : [0, 1, 2, 3, 4],
             [i, i + size, i + size * 2, i + size * 3, i + size * 4],
             [i, i + size + 1, i + (size + 1) * 2, i + (size + 1) * 3, i + (size + 1) * 4],
@@ -103,7 +103,7 @@ class App extends React.Component<{}, State> {
     } else if (this.state.mode === 4) {
       for (let i = 0; i < current.length; i++) {
         if (current[i]) {
-          const pattern = [
+          const pattern : number[][] = [
             i % size <= size - this.state.mode ? [i, i + 1, i + 2, i + 3] : [0, 1, 2, 3],
             [i, i + size, i + size * 2, i + size * 3],
             [i, i + size + 1, i + (size + 1) * 2, i + (size + 1) * 3],
@@ -126,7 +126,7 @@ class App extends React.Component<{}, State> {
     } else if (this.state.mode === 3) {
       for (let i = 0; i < current.length; i++) {
         if (current[i]) {
-          const pattern = [
+          const pattern : number[][] = [
             i % size <= size - this.state.mode ? [i, i + 1, i + 2] : [0, 1, 2],
             [i, i + size, i + size * 2],
             [i, i + size + 1, i + (size + 1) * 2],
@@ -156,7 +156,7 @@ class App extends React.Component<{}, State> {
           <span>
             현재 모드 : {this.state.size} X {this.state.size} / {this.state.mode}목
           </span>
-          <Mode onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.changeMode(e)} />
+          <Mode onSubmit={(e: React.FormEvent<HTMLFormElement>) => {this.changeMode(e)}} />
         </header>
         <section className="Main">
           <article className="Board">

@@ -5,7 +5,7 @@ interface BoxProps {
   onClick: any
 }
 
-class Box extends React.Component<BoxProps, {}> {
+class Box extends React.Component<BoxProps> {
   render() {
     return (
       <button className="Box" onClick={() => this.props.onClick()}>
