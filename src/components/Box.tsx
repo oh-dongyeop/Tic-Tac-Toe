@@ -8,7 +8,7 @@ interface BoxProps {
 class Box extends React.Component<BoxProps> {
   render() {
     return (
-      <button className="Box" onClick={() => {this.props.onClick()}}>
+      <button className="Box" onClick={this.props.onClick.bind(this)}>
         <span className="value">{this.props.value}</span>
       </button>
     )

@@ -5,7 +5,7 @@ interface MessageProps {
 }
 
 class Message extends React.Component<MessageProps> {
-  render() {
+  render() : JSX.Element {
     return <span>{this.props.value}</span>
   }
 }

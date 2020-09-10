@@ -5,9 +5,9 @@ interface ModeProps {
 }
 
 class Mode extends React.Component<ModeProps> {
-  render() {
+  render() : JSX.Element {
     return (
-      <form className="Mode" onSubmit={(e) => {this.props.onSubmit(e)}}>
+      <form className="Mode" onSubmit={this.props.onSubmit.bind(this)}>
         <div>
           <input type="radio" name="size" value={3} />
           3x3

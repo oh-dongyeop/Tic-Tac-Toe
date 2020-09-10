@@ -28,7 +28,7 @@ class App extends React.Component<{}, State> {
     }
   }
 
-  changeMode = (e: React.FormEvent<HTMLFormElement>): void => {
+  changeMode(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
     const target = e.target as HTMLFormElement
     const newSize: number = Number(target.size.value)
@@ -46,7 +46,7 @@ class App extends React.Component<{}, State> {
     }
   }
 
-  handleClick = (i: number): void => {
+  handleClick (i: number): void {
     const point: number = this.state.point
     const history: (string | null)[][] = this.state.history.slice(0, point + 1)
     const current: (string | null)[] = history[history.length - 1].slice()
@@ -63,14 +63,14 @@ class App extends React.Component<{}, State> {
     }
   }
 
-  jumpTo = (i: number): void => {
+  jumpTo(i: number): void {
     this.setState({
       point: i,
       turn: i % 2 === 0 ? "X" : "O",
     })
   }
 
-  reset = (): void => {
+  reset(): void {
     this.setState({
       history: [Array(this.state.size * this.state.size).fill(null)],
       point: 0,
@@ -78,7 +78,7 @@ class App extends React.Component<{}, State> {
     })
   }
 
-  render() {
+  render(): JSX.Element {
     const point: number = this.state.point
     const history: (string | null)[][] = this.state.history.slice(0, point + 1)
     const current: (string | null)[] = history[history.length - 1].slice()
@@ -91,9 +91,7 @@ class App extends React.Component<{}, State> {
             현재 모드 : {size} X {size} / {mode}목
           </span>
           <Mode
-            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-              this.changeMode(e)
-            }}
+            onSubmit={this.changeMode.bind(this)}
           />
         </header>
         <section className="Main">
@@ -101,15 +99,15 @@ class App extends React.Component<{}, State> {
             <Board
               size={size}
               boxes={current}
-              onClick={(index: number) => this.handleClick(index)}
+              onClick={this.handleClick.bind(this)}
             />
           </article>
           <article className="History">
             <Message value={isEnd(current, size, mode, point)} />
             <History
               history={this.state.history}
-              onClick={(i: number) => this.jumpTo(i)}
-              reset={() => this.reset()}
+              onClick={this.jumpTo.bind(this)}
+              reset={this.reset.bind(this)}
               point={point}
             />
           </article>
