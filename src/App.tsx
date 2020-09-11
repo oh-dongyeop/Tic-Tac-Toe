@@ -7,6 +7,7 @@ import History from "./components/History"
 import Message from "./components/Message"
 
 import isEnd from "./isEnd"
+import sharpWin from "./sharpWin"
 
 interface State {
   size: number
@@ -22,7 +23,7 @@ class App extends React.Component<{}, State> {
     this.state = {
       size: 3,
       mode: 3,
-      history: [Array(9).fill(null)],
+      history: [Array(9).fill("#")],
       point: 0,
       turn: "X",
     }
@@ -45,22 +46,32 @@ class App extends React.Component<{}, State> {
       alert("값 입력 오류 // 보드 사이즈를 늘리세요.")
     }
   }
-
+  componentDidMount(){
+    console.log('hi');
+    this.willWin()
+  }
   handleClick (i: number): void {
     const point: number = this.state.point
     const history: (string | null)[][] = this.state.history.slice(0, point + 1)
-    const current: (string | null)[] = history[history.length - 1].slice()
-    if (
-      !current[i] &&
-      !isEnd(current, this.state.size, this.state.mode, point).includes("Victory")
-    ) {
-      current[i] = this.state.turn
-      this.setState({
-        history: history.concat([current]),
-        turn: this.state.turn === "X" ? "O" : "X",
-        point: history.length,
-      })
+    let current: (string | null)[] = history[history.length - 1].slice()
+    for(let i = 0 ; i < current.length ; i++){
+      if(current[i]==="#"){
+        current[i] = null;
+      }
     }
+    if (
+      (!current[i] || current[i]==="#") &&
+      !isEnd(current, this.state.size, this.state.mode, point).includes("Victory")
+      ) {
+        current[i] = this.state.turn
+        this.setState({
+          history: history.concat([current]),
+          turn: this.state.turn === "X" ? "O" : "X",
+          point: history.length,
+        },()=>this.willWin())
+      }
+      
+    
   }
 
   jumpTo(i: number): void {
@@ -75,6 +86,18 @@ class App extends React.Component<{}, State> {
       history: [Array(this.state.size * this.state.size).fill(null)],
       point: 0,
       turn: "X",
+    })
+  }
+
+  willWin(){
+    const point = this.state.point
+    let history = this.state.history.slice(0, point+1);
+    let current = history[history.length -1].slice();
+    if(isEnd(current,this.state.size,this.state.mode,point).includes("Victory")) return;
+    console.log(sharpWin(current,this.state.size,this.state.mode,this.state.turn))
+    history[point] = sharpWin(current,this.state.size,this.state.mode,this.state.turn)
+    this.setState({
+      history: history
     })
   }
 

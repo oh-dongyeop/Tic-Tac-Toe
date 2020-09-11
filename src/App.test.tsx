@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { unmountComponentAtNode, render } from "react-dom"
 import { act } from "react-dom/test-utils"
 
@@ -18,7 +18,7 @@ afterEach(() => {
 
 describe("Event Test", () => {
   it("When click a Box", () => {
-    const app: any = render(<App />, container)
+    const app = render(<App/>,container)
     const box: NodeListOf<Element> = document.querySelectorAll(".Box")
     act(() => {
       box[0].dispatchEvent(new MouseEvent("click", { bubbles: true }))
@@ -35,8 +35,5 @@ describe("Event Test", () => {
     act(() => {
       box[1].dispatchEvent(new MouseEvent("click", { bubbles: true }))
     })
-    console.log(app.state.history[app.state.point])
-    console.log(app.isEnd() + " Victory")
-    expect(app.isEnd()).toBe("X")
   })
 })

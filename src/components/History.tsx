@@ -66,15 +66,37 @@ class History extends React.Component<HistoryProps, HistoryState> {
       )
     })
   }
+  showButton(){
+    const _point: number = this.props.point;
+    if(this.props.history.length < 2){
+      return
+    }
+    if(this.props.history.length-1 === this.props.point){
+      return (
+      <div>
+        <button onClick={this.prev.bind(this,_point)}>{"<"}</button>
+      </div>
+      )
+    }else if( _point === 0){
+      return <button onClick={this.next.bind(this,_point)}>{">"}</button>
+    }
+    else{
+      return (
+      <div>
+        <button onClick={this.prev.bind(this,_point)}>{"<"}</button>
+        <button onClick={this.next.bind(this,_point)}>{">"}</button>
+      </div>
+      )
+    }
+  }
 
   render() : JSX.Element {
-    const _point: number = this.props.point;
+    
     return (
       <div>
         <h1>History</h1>
         <div className="PrevNext">
-          <button onClick={this.prev.bind(this,_point)}>{"<"}</button>
-          <button onClick={this.next.bind(this,_point)}>{">"}</button>
+          {this.showButton()}
           <button
             onClick={this.play.bind(this)}
           >

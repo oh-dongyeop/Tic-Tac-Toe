@@ -9,7 +9,7 @@ interface BoardProps {
 
 class Board extends React.Component<BoardProps> {
   render() : JSX.Element {
-    const boxes : JSX.Element[] = this.props.boxes.map((value: string | null, index: number) => {
+    let boxes : JSX.Element[] = this.props.boxes.map((value: string | null, index: number) => {
       return <Box key={index} value={value} onClick={this.props.onClick.bind(this,index)} />
     })
     return <div className="Boxes" style={{gridTemplateColumns: `repeat( ${this.props.size},1fr)`}}>{boxes}</div>
