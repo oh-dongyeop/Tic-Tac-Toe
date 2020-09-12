@@ -1,4 +1,5 @@
-export default function sharpWin(
+/**
+ * export default function sharpWin(
     current: (string | null)[],
     size: number,
     mode: number,
@@ -33,4 +34,4 @@ export default function sharpWin(
     }
     return newCurrent;
   }
-  
+  */

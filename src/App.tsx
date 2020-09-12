@@ -7,7 +7,6 @@ import History from "./components/History"
 import Message from "./components/Message"
 
 import isEnd from "./isEnd"
-import sharpWin from "./sharpWin"
 
 interface State {
   size: number
@@ -46,32 +45,27 @@ class App extends React.Component<{}, State> {
       alert("값 입력 오류 // 보드 사이즈를 늘리세요.")
     }
   }
-  componentDidMount(){
-    console.log('hi');
-    this.willWin()
-  }
-  handleClick (i: number): void {
+
+  handleClick(i: number): void {
     const point: number = this.state.point
     const history: (string | null)[][] = this.state.history.slice(0, point + 1)
     let current: (string | null)[] = history[history.length - 1].slice()
-    for(let i = 0 ; i < current.length ; i++){
-      if(current[i]==="#"){
-        current[i] = null;
+    for (let i = 0; i < current.length; i++) {
+      if (current[i] === "#") {
+        current[i] = null
       }
     }
     if (
-      (!current[i] || current[i]==="#") &&
+      (!current[i] || current[i] === "#") &&
       !isEnd(current, this.state.size, this.state.mode, point).includes("Victory")
-      ) {
-        current[i] = this.state.turn
-        this.setState({
-          history: history.concat([current]),
-          turn: this.state.turn === "X" ? "O" : "X",
-          point: history.length,
-        },()=>this.willWin())
-      }
-      
-    
+    ) {
+      current[i] = this.state.turn
+      this.setState({
+        history: history.concat([current]),
+        turn: this.state.turn === "X" ? "O" : "X",
+        point: history.length,
+      })
+    }
   }
 
   jumpTo(i: number): void {
@@ -89,18 +83,6 @@ class App extends React.Component<{}, State> {
     })
   }
 
-  willWin(){
-    const point = this.state.point
-    let history = this.state.history.slice(0, point+1);
-    let current = history[history.length -1].slice();
-    if(isEnd(current,this.state.size,this.state.mode,point).includes("Victory")) return;
-    console.log(sharpWin(current,this.state.size,this.state.mode,this.state.turn))
-    history[point] = sharpWin(current,this.state.size,this.state.mode,this.state.turn)
-    this.setState({
-      history: history
-    })
-  }
-
   render(): JSX.Element {
     const point: number = this.state.point
     const history: (string | null)[][] = this.state.history.slice(0, point + 1)
@@ -113,17 +95,11 @@ class App extends React.Component<{}, State> {
           <span>
             현재 모드 : {size} X {size} / {mode}목
           </span>
-          <Mode
-            onSubmit={this.changeMode.bind(this)}
-          />
+          <Mode onSubmit={this.changeMode.bind(this)} />
         </header>
         <section className="Main">
           <article className="Board">
-            <Board
-              size={size}
-              boxes={current}
-              onClick={this.handleClick.bind(this)}
-            />
+            <Board size={size} boxes={current} onClick={this.handleClick.bind(this)} />
           </article>
           <article className="History">
             <Message value={isEnd(current, size, mode, point)} />
