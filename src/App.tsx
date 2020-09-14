@@ -1,4 +1,4 @@
-import React from "react"
+import React,{useState} from "react"
 import "./App.css"
 
 import Board from "./components/Board"
@@ -8,48 +8,33 @@ import Message from "./components/Message"
 
 import isEnd from "./isEnd"
 
-interface State {
-  size: number
-  mode: number
-  history: (string | null)[][]
-  point: number
-  turn: string
-}
+function App(props : {}) {
+  const [size, setSize] = useState(3);
+  const [mode, setMode] = useState(3);
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [point, setPoint] = useState(0);
+  const [turn, setTurn] = useState('X');
 
-class App extends React.Component<{}, State> {
-  constructor(props: {}) {
-    super(props)
-    this.state = {
-      size: 3,
-      mode: 3,
-      history: [Array(9).fill("#")],
-      point: 0,
-      turn: "X",
-    }
-  }
+  const newHistory: (string | null)[][] = history.slice(0, point + 1)
+  const current: (string | null)[] = newHistory[newHistory.length - 1].slice()
 
-  changeMode(e: React.FormEvent<HTMLFormElement>): void {
+  function changeMode(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
     const target = e.target as HTMLFormElement
     const newSize: number = Number(target.size.value)
     const newMode: number = Number(target.mode.value)
     if (newSize && newMode && newMode <= newSize) {
-      this.setState({
-        size: newSize,
-        mode: newMode,
-        history: [Array(newSize * newSize).fill(null)],
-        point: 0,
-        turn: "X",
-      })
+      setSize(newSize);
+      setMode(newMode);
+      setHistory([Array(newSize * newSize).fill(null)]);
+      setPoint(0);
+      setTurn("X");
     } else {
       alert("값 입력 오류 // 보드 사이즈를 늘리세요.")
     }
   }
 
-  handleClick(i: number): void {
-    const point: number = this.state.point
-    const history: (string | null)[][] = this.state.history.slice(0, point + 1)
-    let current: (string | null)[] = history[history.length - 1].slice()
+  function handleClick(i: number): void {
     for (let i = 0; i < current.length; i++) {
       if (current[i] === "#") {
         current[i] = null
@@ -57,63 +42,51 @@ class App extends React.Component<{}, State> {
     }
     if (
       (!current[i] || current[i] === "#") &&
-      !isEnd(current, this.state.size, this.state.mode, point).includes("Victory")
+      !isEnd(current, size, mode, point).includes("Victory")
     ) {
-      current[i] = this.state.turn
-      this.setState({
-        history: history.concat([current]),
-        turn: this.state.turn === "X" ? "O" : "X",
-        point: history.length,
-      })
+      current[i] = turn
+      setHistory(newHistory.concat([current]));
+      setTurn(turn === "X" ? "O" : "X");
+      setPoint(newHistory.length)
     }
   }
 
-  jumpTo(i: number): void {
-    this.setState({
-      point: i,
-      turn: i % 2 === 0 ? "X" : "O",
-    })
+  function jumpTo(i: number): void {
+    setPoint(i);
+    setTurn(i % 2 === 0 ? "X" : "O");
   }
 
-  reset(): void {
-    this.setState({
-      history: [Array(this.state.size * this.state.size).fill(null)],
-      point: 0,
-      turn: "X",
-    })
+  function reset(): void {
+    setHistory([Array(size * size).fill(null)]);
+    setPoint(0);
+    setTurn("X");
   }
 
-  render(): JSX.Element {
-    const point: number = this.state.point
-    const history: (string | null)[][] = this.state.history.slice(0, point + 1)
-    const current: (string | null)[] = history[history.length - 1].slice()
-    const size: number = this.state.size
-    const mode: number = this.state.mode
-    return (
-      <div className="App">
-        <header>
-          <span>
-            현재 모드 : {size} X {size} / {mode}목
-          </span>
-          <Mode onSubmit={this.changeMode.bind(this)} />
-        </header>
-        <section className="Main">
-          <article className="Board">
-            <Board size={size} boxes={current} onClick={this.handleClick.bind(this)} />
-          </article>
-          <article className="History">
-            <Message value={isEnd(current, size, mode, point)} />
-            <History
-              history={this.state.history}
-              onClick={this.jumpTo.bind(this)}
-              reset={this.reset.bind(this)}
-              point={point}
-            />
-          </article>
-        </section>
-      </div>
-    )
-  }
+  return (
+    <div className="App">
+      <header>
+        <span>
+          현재 모드 : {size} X {size} / {mode}목
+        </span>
+        <Mode onSubmit={changeMode} />
+      </header>
+      <section className="Main">
+        <article className="Board">
+          <Board size={size} boxes={current} onClick={handleClick} />
+        </article>
+        <article className="History">
+          <Message value={isEnd(current, size, mode, point)} />
+          <History
+            history={history}
+            onClick={jumpTo}
+            reset={reset}
+            point={point}
+          />
+        </article>
+      </section>
+    </div>
+  )
 }
+
 
 export default App

@@ -5,14 +5,12 @@ interface BoxProps {
   onClick: () => void
 }
 
-class Box extends React.Component<BoxProps> {
-  render() {
-    return (
-      <button className="Box" onClick={this.props.onClick.bind(this)}>
-        <span className="value">{this.props.value}</span>
-      </button>
-    )
-  }
+function Box(props : BoxProps){
+  return (
+    <button className="Box" onClick={(e)=>props.onClick()}>
+      <span className="value">{props.value}</span>
+    </button>
+  )
 }
 
 export default Box
