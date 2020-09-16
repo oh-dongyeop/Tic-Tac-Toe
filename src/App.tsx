@@ -9,11 +9,11 @@ import Message from "./components/Message"
 import isEnd from "./isEnd"
 
 function App(props : {}) {
-  const [size, setSize] = useState(3);
-  const [mode, setMode] = useState(3);
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [point, setPoint] = useState(0);
-  const [turn, setTurn] = useState('X');
+  const [size, setSize] = useState<number>(3);
+  const [mode, setMode] = useState<number>(3);
+  const [history, setHistory] = useState<(string|null) [][]>([Array(9).fill(null)]);
+  const [point, setPoint] = useState<number>(0);
+  const [turn, setTurn] = useState<string>('X');
 
   const newHistory: (string | null)[][] = history.slice(0, point + 1)
   const current: (string | null)[] = newHistory[newHistory.length - 1].slice()
@@ -21,8 +21,8 @@ function App(props : {}) {
   function changeMode(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault()
     const target = e.target as HTMLFormElement
-    const newSize: number = Number(target.size.value)
-    const newMode: number = Number(target.mode.value)
+    const newSize = Number(target.size.value)
+    const newMode = Number(target.mode.value)
     if (newSize && newMode && newMode <= newSize) {
       setSize(newSize);
       setMode(newMode);
@@ -35,11 +35,6 @@ function App(props : {}) {
   }
 
   function handleClick(i: number): void {
-    for (let i = 0; i < current.length; i++) {
-      if (current[i] === "#") {
-        current[i] = null
-      }
-    }
     if (
       (!current[i] || current[i] === "#") &&
       !isEnd(current, size, mode, point).includes("Victory")

@@ -60,7 +60,9 @@ header {
   display: block;
   margin: 5px;
 }
-
+.PrevNext{
+  height: 33px;
+}
 .PrevNext button {
   display: inline-block;
 }

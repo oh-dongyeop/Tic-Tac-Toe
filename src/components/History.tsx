@@ -1,10 +1,9 @@
-import { resolve } from "dns";
-import React,{useEffect, useState} from "react"
+import React from "react"
 
 interface HistoryProps {
   history: (string | null)[][]
-  onClick: any
-  reset: any
+  onClick: (i: number) => void
+  reset: () => void
   point: number
 }
 
@@ -22,54 +21,29 @@ function History(props : HistoryProps) {
     }
   }
 
-  let [isPlay, setPlay] = useState<boolean>(false);
-  
-  let timer: any = null;
+  const isPlay = React.useRef<boolean>(false);
+  const [control,setControl] = React.useState<boolean>(false);
 
-  useEffect(() => {
-    console.log("isPlay", isPlay, timer)
+  function play () : void {
     const _history : (string | null)[][] = props.history;
     const _point: number = props.point;
-
-    if (isPlay) {
-      if(timer) {
-        clearInterval(timer);
-      }
-      let i : number = _point === _history.length - 1 ? 0 : _point
-      timer = setInterval(() => {
-        console.log("setInterval", timer);
-        console.log(i, _history.length)
-        if (i < _history.length) {
+    let i : number = _point === _history.length - 1 ? 0 : _point
+    if(!isPlay.current){
+      isPlay.current = !isPlay.current;
+      const timer = setInterval(() => {
+        if (i < _history.length && isPlay.current) {
           props.onClick(i++)
         } else {
+          isPlay.current=false;
+          setControl(!control)
           clearInterval(timer)
         }
-      }, 1000)
-    } else {
-      console.log("before", timer);
-      clearInterval(timer)
-      console.log("after", timer);
+      }, 300)
+    }else{
+      isPlay.current = false;
+      setControl(!control)
     }
-  }, [isPlay]);
-
-  // function play() : void {
-  //   const _history : (string | null)[][] = props.history;
-  //   const _point: number = props.point;
-  //   if (control === "Play") {
-  //     setControl('Stop');
-  //     let i : number = _point === _history.length - 1 ? 0 : _point
-  //     const play : NodeJS.Timeout= setInterval(() => {
-  //       if (i < _history.length && control === "Stop") {
-  //         props.onClick(i++)
-  //       } else {
-  //         setControl("Play");
-  //         clearInterval(play)
-  //       }
-  //     }, 300)
-  //   } else {
-  //     setControl("Play");
-  //   }
-  // }
+  }
 
   function history() {
     return props.history.map((_, index: number) => {
@@ -81,7 +55,7 @@ function History(props : HistoryProps) {
         )
       }
       return (
-        <button key={index} onClick={props.onClick(index)}>
+        <button key={index} onClick={()=>props.onClick(index)}>
           Jump to {index}
         </button>
       )
@@ -91,38 +65,47 @@ function History(props : HistoryProps) {
   function showButton(){
     const _point: number = props.point;
     if(props.history.length < 2){
-      return
+      return (
+        <div>
+          <button onClick={() => {prev(_point)}} disabled>{"<"}</button>
+          <button onClick={() => {next(_point)}} disabled>{">"}</button>
+        </div>
+        )
     }
     if(props.history.length-1 === props.point){
       return (
       <div>
-        <button onClick={(e) => {prev(_point)}}>{"<"}</button>
+        <button onClick={() => {prev(_point)}}>{"<"}</button>
+        <button onClick={() => {next(_point)}} disabled>{">"}</button>
       </div>
       )
     }else if( _point === 0){
-      return <button onClick={(e) => {next(_point)}}>{">"}</button>
+      
+      return (
+        <div>
+          <button onClick={() => {prev(_point)}} disabled>{"<"}</button>
+          <button onClick={() => {next(_point)}}>{">"}</button>
+        </div>
+      )
     }
     else{
       return (
       <div>
-        <button onClick={(e) => {prev(_point)}}>{"<"}</button>
-        <button onClick={(e) => {next(_point)}}>{">"}</button>
+        <button onClick={() => {prev(_point)}}>{"<"}</button>
+        <button onClick={() => {next(_point)}}>{">"}</button>
       </div>
       )
     }
   }
 
+  
   return (
     <div>
       <h1>History</h1>
       <div className="PrevNext">
         {showButton()}
-        <button
-          onClick={() => { setPlay(!isPlay) }}
-        >
-          {isPlay ? `stop` : `play`}
-        </button>
       </div>
+      <button onClick={() => { play() }}> {isPlay.current?"stop":"play"} </button>
       {history()}
     </div>
   )
