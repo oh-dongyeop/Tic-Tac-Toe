@@ -1,28 +1,30 @@
-import React,{useState} from "react"
-import "./App.css"
+import React, { useState } from "react";
+import "./App.css";
 
-import Board from "./components/Board"
-import Mode from "./components/Mode"
-import History from "./components/History"
-import Message from "./components/Message"
+import Board from "./components/Board";
+import Mode from "./components/Mode";
+import History from "./components/History";
+import Message from "./components/Message";
 
-import isEnd from "./isEnd"
+import isEnd from "./isEnd";
 
-function App(props : {}) {
+function App() {
   const [size, setSize] = useState<number>(3);
   const [mode, setMode] = useState<number>(3);
-  const [history, setHistory] = useState<(string|null) [][]>([Array(9).fill(null)]);
+  const [history, setHistory] = useState<(string | null)[][]>([
+    Array(9).fill(null),
+  ]);
   const [point, setPoint] = useState<number>(0);
-  const [turn, setTurn] = useState<string>('X');
+  const [turn, setTurn] = useState<string>("X");
 
-  const newHistory: (string | null)[][] = history.slice(0, point + 1)
-  const current: (string | null)[] = newHistory[newHistory.length - 1].slice()
+  const newHistory: (string | null)[][] = history.slice(0, point + 1);
+  const current: (string | null)[] = newHistory[newHistory.length - 1].slice();
 
   function changeMode(e: React.FormEvent<HTMLFormElement>): void {
-    e.preventDefault()
-    const target = e.target as HTMLFormElement
-    const newSize = Number(target.size.value)
-    const newMode = Number(target.mode.value)
+    e.preventDefault();
+    const target = e.target as HTMLFormElement;
+    const newSize = Number(target.size.value);
+    const newMode = Number(target.mode.value);
     if (newSize && newMode && newMode <= newSize) {
       setSize(newSize);
       setMode(newMode);
@@ -30,7 +32,7 @@ function App(props : {}) {
       setPoint(0);
       setTurn("X");
     } else {
-      alert("값 입력 오류 // 보드 사이즈를 늘리세요.")
+      alert("값 입력 오류 // 보드 사이즈를 늘리세요.");
     }
   }
 
@@ -39,10 +41,10 @@ function App(props : {}) {
       (!current[i] || current[i] === "#") &&
       !isEnd(current, size, mode, point).includes("Victory")
     ) {
-      current[i] = turn
+      current[i] = turn;
       setHistory(newHistory.concat([current]));
       setTurn(turn === "X" ? "O" : "X");
-      setPoint(newHistory.length)
+      setPoint(newHistory.length);
     }
   }
 
@@ -80,8 +82,7 @@ function App(props : {}) {
         </article>
       </section>
     </div>
-  )
+  );
 }
 
-
-export default App
+export default App;
