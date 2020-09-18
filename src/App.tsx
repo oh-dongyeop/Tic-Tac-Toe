@@ -20,15 +20,11 @@ function App() {
   const newHistory: (string | null)[][] = history.slice(0, point + 1);
   const current: (string | null)[] = newHistory[newHistory.length - 1].slice();
 
-  function changeMode(e: React.FormEvent<HTMLFormElement>): void {
-    e.preventDefault();
-    const target = e.target as HTMLFormElement;
-    const newSize = Number(target.size.value);
-    const newMode = Number(target.mode.value);
-    if (newSize && newMode && newMode <= newSize) {
-      setSize(newSize);
-      setMode(newMode);
-      setHistory([Array(newSize * newSize).fill(null)]);
+  function changeMode(size: number, mode: number): void {
+    if (size && mode && mode <= size) {
+      setSize(size);
+      setMode(mode);
+      setHistory([Array(size * size).fill(null)]);
       setPoint(0);
       setTurn("X");
     } else {
@@ -62,10 +58,8 @@ function App() {
   return (
     <div className="App">
       <header>
-        <span>
-          현재 모드 : {size} X {size} / {mode}목
-        </span>
-        <Mode onSubmit={changeMode} />
+        <span>{`현재 모드 : ${size} X ${size} / ${mode}목`}</span>
+        <Mode changeMode={changeMode} />
       </header>
       <section className="Main">
         <article className="Board">

@@ -1,39 +1,44 @@
-import React from "react"
+import React from "react";
 
 interface ModeProps {
-  onSubmit: (event : React.FormEvent<HTMLFormElement>) => void
+  changeMode: (size: number, mode: number) => void;
 }
 
-function Mode(props : ModeProps) {
+function Mode(props: ModeProps) {
+  const [size, setSize] = React.useState(3);
+  const [mode, setMode] = React.useState(3);
+
+  const sizeArr: number[] = [];
+  for (let i = 3; i < 10; i++) {
+    sizeArr.push(i);
+  }
+  const sizeList = sizeArr.map((value, index) => {
+    return (
+      <span key={index}>
+        <input type="radio" name="size" onClick={() => setSize(value)} />
+        <span>{`${value}x${value}`}</span>
+      </span>
+    );
+  });
+  const modeArr: number[] = [];
+  for (let i = 3; i < 6; i++) {
+    modeArr.push(i);
+  }
+  const modeList = modeArr.map((value, index) => {
+    return (
+      <span key={index}>
+        <input type="radio" name="mode" onClick={() => setMode(value)} />
+        <span>{`${value}목`}</span>
+      </span>
+    );
+  });
   return (
-    <form className="Mode" onSubmit={props.onSubmit}>
-      <div>
-        <input type="radio" name="size" value={3} />
-        3x3
-        <input type="radio" name="size" value={4} />
-        4x4
-        <input type="radio" name="size" value={5} />
-        5x5
-        <input type="radio" name="size" value={6} />
-        6x6
-        <input type="radio" name="size" value={7} />
-        7x7
-        <input type="radio" name="size" value={8} />
-        8x8
-        <input type="radio" name="size" value={9} />
-        9x9
-      </div>
-      <div>
-        <input type="radio" name="mode" value={3} />
-        3목
-        <input type="radio" name="mode" value={4} />
-        4목
-        <input type="radio" name="mode" value={5} />
-        5목
-      </div>
-      <input type="submit" value="변경" />
-    </form>
-  )
+    <div>
+      <div>{sizeList}</div>
+      <div>{modeList}</div>
+      <button onClick={() => props.changeMode(size, mode)}>변경</button>
+    </div>
+  );
 }
 
-export default Mode
+export default Mode;
